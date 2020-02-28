@@ -10,16 +10,11 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
 import com.mart.eindproject.util.PokemonUtil;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -97,19 +92,11 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
     public void makeRequest(){
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon/" + pokemonID,
-            new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
+                response -> {
                     Pokemon pokemon = new Pokemon(response);
                     populateData(pokemon);
-                }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }
+                },
+                error -> swipeRefreshLayout.setRefreshing(false)
         );
         queue.add(stringRequest);
     }

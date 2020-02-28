@@ -5,4 +5,5 @@
     <string name="login_button_text">Login</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="noConnection">This app needs a valid interconnection to work. Please establish one.</string>
 </resources>

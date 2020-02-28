@@ -14,6 +14,8 @@ public class PokemonListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+        View fragment = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
+
+        return fragment;
     }
 }
