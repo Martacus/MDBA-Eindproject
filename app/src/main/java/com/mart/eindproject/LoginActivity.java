@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,9 +45,26 @@ public class LoginActivity extends AppCompatActivity {
     private void validate(String username, String password){
         if(accounts.containsKey(username)){
             if(password.contentEquals(password)){
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                if(isInternetAvailable()){
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    TextView noLoginText = findViewById(R.id.noInternet);
+                    noLoginText.setText(R.string.noConnection);
+                }
             }
+        }
+    }
+
+    public boolean isInternetAvailable() {
+        try {
+            InetAddress ipAddr = InetAddress.getByName("google.com");
+            //You can replace it with your name
+            return !ipAddr.equals("");
+
+        } catch (Exception e) {
+            return false;
         }
     }
 }
