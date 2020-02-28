@@ -16,6 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
+import com.mart.eindproject.util.PokemonUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +37,7 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
     }
 
     public PokemonViewFragment(){
-        this(1);
+        this(94);
     }
 
     @Nullable
@@ -68,32 +69,52 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         makeRequest();
     }
 
-    public void makeRequest(){
-        //Get all the different components on the page
-        final TextView textView = rootView.findViewById(R.id.pokemon_name);
+    public void populateData(Pokemon pokemon){
+        //Gather the data objects
+        final TextView textName = rootView.findViewById(R.id.pokemon_name);
+        final TextView textType1 = rootView.findViewById(R.id.textType1);
+        final TextView textType2 = rootView.findViewById(R.id.textType2);
 
-        //Setup a request
+        //Data
+        int id =  pokemon.getId();
+        String pokemonName = getCapitalWorld(pokemon.getName()) + " | #" + id;
+
+        //Set Data
+        textName.setText(pokemonName);
+
+        textType1.setText(getCapitalWorld(pokemon.getType1()));
+        textType1.setBackgroundColor(PokemonUtil.getTypeColor(pokemon.getType1()));
+
+        if(pokemon.getType2() != null){
+            textType2.setText(getCapitalWorld(pokemon.getType2()));
+            textType2.setBackgroundColor(PokemonUtil.getTypeColor(pokemon.getType2()));
+        }
+
+        new DownloadImageTask((ImageView) rootView.findViewById(R.id.imageView)).execute(pokemon.getPicture());
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    public void makeRequest(){
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon/" + pokemonID,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Pokemon pokemon = new Pokemon(response);
-                    textView.setText(pokemon.getName());
-
-                    new DownloadImageTask((ImageView) rootView.findViewById(R.id.imageView)).execute(pokemon.getPicture());
-                    swipeRefreshLayout.setRefreshing(false);
+                    populateData(pokemon);
                 }
             },
             new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    textView.setText("Something went wrong, please reload again.");
                     swipeRefreshLayout.setRefreshing(false);
-
                 }
             }
         );
         queue.add(stringRequest);
+    }
+
+    public String getCapitalWorld(String s){
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 }
