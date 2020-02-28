@@ -7,15 +7,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_message"
+            android:id="@+id/nav_pokemon"
             android:icon="@drawable/ic_message"
             android:title="Pokemon" />
         <item
-            android:id="@+id/nav_chat"
+            android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_message"
             android:title="Favorite" />
         <item
-            android:id="@+id/nav_profile"
+            android:id="@+id/nav_logout"
             android:icon="@drawable/ic_message"
             android:title="Logout" />
     </group>
