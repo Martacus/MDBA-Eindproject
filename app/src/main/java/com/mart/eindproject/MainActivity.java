@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(menuItem.getItemId()){
             case R.id.nav_pokemon:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new PokemonListFragment()).addToBackStack(null).commit();
+                        new PokemonViewFragment(1)).addToBackStack(null).commit();
                 break;
             case R.id.nav_logout:
                 Intent intent = new Intent(this, LoginActivity.class);
