@@ -1,5 +1,6 @@
 package com.mart.eindproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -55,6 +56,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_pokemon:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new PokemonListFragment()).commit();
+                break;
+            case R.id.nav_logout:
+                Intent intent = new Intent(this, LoginActivity.class);
+                startActivity(intent);
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
