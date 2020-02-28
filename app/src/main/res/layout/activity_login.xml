@@ -24,11 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:importantForAutofill="no"
+        android:autofillHints="password"
         android:ems="10"
         android:hint="@string/password_login"
         android:inputType="textPassword"
-        android:textColor="#00701414"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username_text_field" />

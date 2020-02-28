@@ -45,26 +45,28 @@ public class LoginActivity extends AppCompatActivity {
     private void validate(String username, String password){
         if(accounts.containsKey(username)){
             if(password.contentEquals(password)){
-                if(isInternetAvailable()){
-                    Intent intent = new Intent(this, MainActivity.class);
-                    startActivity(intent);
-                }
-                else{
-                    TextView noLoginText = findViewById(R.id.noInternet);
-                    noLoginText.setText(R.string.noConnection);
-                }
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+//                if(isInternetAvailable()){
+//                    Intent intent = new Intent(this, MainActivity.class);
+//                    startActivity(intent);
+//                }
+//                else{
+//                    TextView noLoginText = findViewById(R.id.noInternet);
+//                    noLoginText.setText(R.string.noConnection);
+//                }
             }
         }
     }
 
-    public boolean isInternetAvailable() {
-        try {
-            InetAddress ipAddr = InetAddress.getByName("google.com");
-            //You can replace it with your name
-            return !ipAddr.equals("");
-
-        } catch (Exception e) {
-            return false;
-        }
-    }
+//    public boolean isInternetAvailable() {
+//        try {
+//            InetAddress ipAddr = InetAddress.getByName("google.com");
+//            //You can replace it with your name
+//            return !ipAddr.equals("mart");
+//
+//        } catch (Exception e) {
+//            return false;
+//        }
+//    }
 }
