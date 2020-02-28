@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new PokemonListFragment()).commit();
+                    new PokemonListFragment()).addToBackStack(null).commit();
             navigationView.setCheckedItem(R.id.nav_pokemon);
         }
     }
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(menuItem.getItemId()){
             case R.id.nav_pokemon:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new PokemonListFragment()).commit();
+                        new PokemonListFragment()).addToBackStack(null).commit();
                 break;
             case R.id.nav_logout:
                 Intent intent = new Intent(this, LoginActivity.class);
