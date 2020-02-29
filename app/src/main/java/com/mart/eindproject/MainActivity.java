@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.mart.eindproject.settings.SettingsActivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_pokemon:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new PokemonViewFragment(94)).addToBackStack(null).commit();
+                break;
+            case R.id.nav_settings:
+                Intent intentSettings = new Intent(this, SettingsActivity.class);
+                startActivity(intentSettings);
                 break;
             case R.id.nav_logout:
                 Intent intent = new Intent(this, LoginActivity.class);
