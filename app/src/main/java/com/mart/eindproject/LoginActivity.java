@@ -33,13 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         Password = findViewById(R.id.password_field);
         Login = findViewById(R.id.login_button);
 
-        Login.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                validate(Name.getText().toString(), Password.getText().toString());
-            }
-        });
+        Login.setOnClickListener(v -> validate(Name.getText().toString(), Password.getText().toString()));
     }
 
     private void validate(String username, String password){
@@ -47,26 +41,8 @@ public class LoginActivity extends AppCompatActivity {
             if(password.contentEquals(password)){
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
-//                if(isInternetAvailable()){
-//                    Intent intent = new Intent(this, MainActivity.class);
-//                    startActivity(intent);
-//                }
-//                else{
-//                    TextView noLoginText = findViewById(R.id.noInternet);
-//                    noLoginText.setText(R.string.noConnection);
-//                }
             }
         }
     }
 
-//    public boolean isInternetAvailable() {
-//        try {
-//            InetAddress ipAddr = InetAddress.getByName("google.com");
-//            //You can replace it with your name
-//            return !ipAddr.equals("mart");
-//
-//        } catch (Exception e) {
-//            return false;
-//        }
-//    }
 }
