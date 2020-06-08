@@ -15,16 +15,15 @@ import com.mart.eindproject.models.Pokemon;
 import java.util.ArrayList;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
-    private Context context;
     private ArrayList<Pokemon> pokemons;
 
-    public PokemonAdapter(Context context, ArrayList<Pokemon> pokemons) { this.context = context; this.pokemons = pokemons;}
+    public PokemonAdapter(ArrayList<Pokemon> pokemons) { this.pokemons = pokemons;}
 
     @NonNull
     @Override
     public PokemonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         view =  layoutInflater.inflate(R.layout.pokemon_card, parent, false);
 
         return new ViewHolder(view);

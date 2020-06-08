@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mart.eindproject.models.Pokemon;
+import com.mart.eindproject.util.PokemonAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +44,8 @@ public class PokemonListFragment extends Fragment {
 
         getPokemons();
 
+        PokemonAdapter adapter = new PokemonAdapter(this.pokemons);
+        recyclerView.setAdapter(adapter);
 
         return rootView;
     }
@@ -73,8 +76,8 @@ public class PokemonListFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
         StringRequest req = new StringRequest(Request.Method.GET, url,
                 response -> {
-                    Pokemon p = new Pokemon(response);
-                    Log.d("tag", "yeeeeet");
+                    this.pokemons.add(new Pokemon(response));
+                    Log.d("tag", "yeeete");
                 },
                 error -> {
                     Log.d("taag", String.valueOf(error));
