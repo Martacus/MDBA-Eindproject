@@ -16,11 +16,17 @@ import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHolder> {
     private ArrayList<Pokemon> pokemons;
 
-    public PokemonAdapter(ArrayList<Pokemon> pokemons) { this.pokemons = pokemons;}
+    public PokemonAdapter(ArrayList<Pokemon> pokemons) {
+        this.pokemons = pokemons;
+
+        Log.e("test", "yeeet");
+    }
 
     @NonNull
     @Override

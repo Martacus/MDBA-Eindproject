@@ -18,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mart.eindproject.models.Pokemon;
+import com.mart.eindproject.util.EndlessRecyclerViewScrollListener;
 import com.mart.eindproject.util.PokemonAdapter;
 
 import org.json.JSONArray;
@@ -25,6 +26,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PokemonListFragment extends Fragment {
 
@@ -32,6 +35,7 @@ public class PokemonListFragment extends Fragment {
     private RecyclerView recyclerView;
     private View rootView = null;
     private PokemonAdapter adapter = null;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     @Nullable
     @Override
@@ -41,9 +45,18 @@ public class PokemonListFragment extends Fragment {
         this.pokemons = new ArrayList<Pokemon>();
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                getPokemons(totalItemsCount);
+            }
+        };
 
-        getPokemons();
+        recyclerView.addOnScrollListener(scrollListener);
+
+        getPokemons(0);
 
         adapter = new PokemonAdapter(this.pokemons);
         recyclerView.setAdapter(adapter);
@@ -51,9 +64,9 @@ public class PokemonListFragment extends Fragment {
         return rootView;
     }
 
-    public void getPokemons() {
+    public void getPokemons(int offset) {
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon",
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon?limit=20&offset="+String.valueOf(offset),
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
@@ -86,6 +99,9 @@ public class PokemonListFragment extends Fragment {
         queue.add(req);
     }
 
+    private void loadMore(int offset){
+
+    }
 
     public void DoSomething() {
 
