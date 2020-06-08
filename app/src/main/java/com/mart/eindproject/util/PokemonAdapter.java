@@ -24,8 +24,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
 
     public PokemonAdapter(ArrayList<Pokemon> pokemons) {
         this.pokemons = pokemons;
-
-        Log.e("test", "yeeet");
     }
 
     @NonNull
@@ -67,6 +65,12 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
 
     public void addPokemon(Pokemon pokemon){
         this.pokemons.add(pokemon);
+        Collections.sort(this.pokemons, new Comparator<Pokemon>() {
+            @Override
+            public int compare(Pokemon p1, Pokemon p2) {
+                return Integer.compare(p1.getId(), p2.getId());
+            }
+        });
         notifyDataSetChanged();
     }
 
