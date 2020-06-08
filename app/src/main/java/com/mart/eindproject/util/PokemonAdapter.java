@@ -31,7 +31,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.id.setText(pokemons.get(position).getId());
+        holder.id.setText(String.valueOf(pokemons.get(position).getId()));
         holder.name.setText(pokemons.get(position).getName());
         holder.type1.setText(pokemons.get(position).getType1());
         holder.type2.setText(pokemons.get(position).getType2());
