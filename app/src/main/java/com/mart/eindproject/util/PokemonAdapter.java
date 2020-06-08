@@ -1,5 +1,6 @@
 package com.mart.eindproject.util;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mart.eindproject.PokemonListFragment;
 import com.mart.eindproject.R;
 import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
@@ -24,8 +26,10 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     @Override
     public PokemonAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
+
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         view =  layoutInflater.inflate(R.layout.pokemon_card, parent, false);
+
 
         return new ViewHolder(view);
     }
@@ -36,6 +40,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         holder.name.setText(pokemons.get(position).getName());
         holder.type1.setText(pokemons.get(position).getType1());
         holder.type2.setText(pokemons.get(position).getType2());
+        holder.itemView.setOnClickListener(new OnClickPokemonListener(pokemons.get(position)));
         new DownloadImageTask((ImageView) holder.img).execute(pokemons.get(position).getPicture());
     }
 
