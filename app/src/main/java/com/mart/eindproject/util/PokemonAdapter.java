@@ -56,4 +56,9 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         }
     }
 
+    public void addPokemon(Pokemon pokemon){
+        this.pokemons.add(pokemon);
+        notifyDataSetChanged();
+    }
+
 }

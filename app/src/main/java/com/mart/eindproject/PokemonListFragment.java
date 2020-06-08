@@ -31,6 +31,7 @@ public class PokemonListFragment extends Fragment {
     private ArrayList<Pokemon> pokemons;
     private RecyclerView recyclerView;
     private View rootView = null;
+    private PokemonAdapter adapter = null;
 
     @Nullable
     @Override
@@ -44,7 +45,7 @@ public class PokemonListFragment extends Fragment {
 
         getPokemons();
 
-        PokemonAdapter adapter = new PokemonAdapter(this.pokemons);
+        adapter = new PokemonAdapter(this.pokemons);
         recyclerView.setAdapter(adapter);
 
         return rootView;
@@ -76,7 +77,7 @@ public class PokemonListFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
         StringRequest req = new StringRequest(Request.Method.GET, url,
                 response -> {
-                    this.pokemons.add(new Pokemon(response));
+                    adapter.addPokemon(new Pokemon(response));
                     Log.d("tag", "yeeete");
                 },
                 error -> {
