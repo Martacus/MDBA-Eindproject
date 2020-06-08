@@ -3,6 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="background">#dedede</color>
 
     <color name="waterType">#6890F0</color>
     <color name="steelType">#B8B8D0</color>
