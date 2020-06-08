@@ -9,15 +9,20 @@
         <item
             android:id="@+id/nav_pokemon"
             android:icon="@drawable/ic_message"
-            android:title="Pokemon" />
+            android:title="@string/nav_pokemon" />
         <item
             android:id="@+id/nav_favorite"
             android:icon="@drawable/ic_message"
-            android:title="Favorite" />
+            android:title="@string/nav_favorite" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_message"
+            android:title="@string/nav_settings" />
+
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_message"
-            android:title="Logout" />
+            android:title="@string/nav_logout" />
     </group>
 
 <!--    <item android:title="Communicate">-->
