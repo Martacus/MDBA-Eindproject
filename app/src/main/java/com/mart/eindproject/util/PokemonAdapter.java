@@ -34,8 +34,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.id.setText(String.valueOf(pokemons.get(position).getId()));
         holder.name.setText(pokemons.get(position).getName());
-        holder.type1.setText(pokemons.get(position).getType1());
-        holder.type2.setText(pokemons.get(position).getType2());
         new DownloadImageTask((ImageView) holder.img).execute(pokemons.get(position).getPicture());
     }
 
@@ -45,15 +43,13 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, type1, type2, id;
+        private TextView name, id;
         private ImageView img;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             id = (TextView) itemView.findViewById(R.id.pokemon_id);
             name = (TextView) itemView.findViewById(R.id.pokemon_name);
-            type1 = (TextView) itemView.findViewById(R.id.pokemon_type_1);
-            type2 = (TextView) itemView.findViewById(R.id.pokemon_type_2);
             img = (ImageView) itemView.findViewById(R.id.pokemon_image);
         }
     }
