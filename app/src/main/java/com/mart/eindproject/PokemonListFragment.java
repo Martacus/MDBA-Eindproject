@@ -55,8 +55,8 @@ public class PokemonListFragment extends Fragment {
                         JSONObject obj = new JSONObject(response);
                         JSONArray array = obj.getJSONArray("results");
                         for(int i=0; i<array.length(); i++) {
-                            Object x = array.getJSONObject(i);
-                            String url = parseString(x.toString());
+                            JSONObject x = array.getJSONObject(i);
+                            String url = x.getString("url");
                             addPokemon(url);
                             Log.d("tag", response);
                         }
@@ -67,15 +67,6 @@ public class PokemonListFragment extends Fragment {
                 error -> DoSomething()
         );
         queue.add(stringRequest);
-    }
-
-    private String parseString(String str) {
-        String[] split = str.split(",");
-        str = split[1];
-        String pattern = "[\"\\\\:\\}(url)]";
-        str = str.replaceAll(pattern,"");
-        Log.d("tag", "yeeeeet");
-        return str;
     }
 
     private void addPokemon(String url) {
