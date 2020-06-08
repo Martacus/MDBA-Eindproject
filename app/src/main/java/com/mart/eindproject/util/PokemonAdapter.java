@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mart.eindproject.R;
 import com.mart.eindproject.models.Pokemon;
+import com.mart.eindproject.tasks.DownloadImageTask;
 
 import java.util.ArrayList;
 
@@ -35,6 +36,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         holder.name.setText(pokemons.get(position).getName());
         holder.type1.setText(pokemons.get(position).getType1());
         holder.type2.setText(pokemons.get(position).getType2());
+        new DownloadImageTask((ImageView) holder.img).execute(pokemons.get(position).getPicture());
     }
 
     @Override
