@@ -31,10 +31,6 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         this.pokemonID = pokemonID;
     }
 
-    public PokemonViewFragment(){
-        this(94);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
