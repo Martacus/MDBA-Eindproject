@@ -16,7 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-
+    private PokemonListFragment listFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
 
         if (savedInstanceState == null) {
+            if(listFragment == null){
+                listFragment = new PokemonListFragment();
+
+            }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new PokemonListFragment()).addToBackStack(null).commit();
+                   listFragment).addToBackStack(null).commit();
             navigationView.setCheckedItem(R.id.nav_pokemon);
         }
     }
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch(menuItem.getItemId()){
             case R.id.nav_pokemon:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new PokemonListFragment()).addToBackStack(null).commit();
+                        this.listFragment).addToBackStack(null).commit();
                 break;
             case R.id.nav_settings:
                 Intent intentSettings = new Intent(this, SettingsActivity.class);

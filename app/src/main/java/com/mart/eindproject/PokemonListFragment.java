@@ -37,36 +37,37 @@ public class PokemonListFragment extends Fragment {
     private PokemonAdapter adapter = null;
     private EndlessRecyclerViewScrollListener scrollListener;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_pokemon_list, container, false);
         this.rootView = rootView;
-        this.pokemons = new ArrayList<Pokemon>();
+        this.pokemons = new ArrayList<>();
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+        recyclerView = rootView.findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
-        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                getPokemons(totalItemsCount);
-            }
-        };
-
-        recyclerView.addOnScrollListener(scrollListener);
-
-        getPokemons(0);
 
         adapter = new PokemonAdapter(this.pokemons);
         recyclerView.setAdapter(adapter);
 
+        if(pokemons.size() == 0){
+            getPokemons();
+        }
+
         return rootView;
     }
 
-    public void getPokemons(int offset) {
+    public void getPokemons() {
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon?limit=20&offset="+String.valueOf(offset),
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon?limit=151",
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
@@ -75,7 +76,7 @@ public class PokemonListFragment extends Fragment {
                             JSONObject x = array.getJSONObject(i);
                             String url = x.getString("url");
                             addPokemon(url);
-                            Log.d("tag", response);
+                            Log.d("tag", url);
                         }
                     } catch(JSONException err) {
 
@@ -91,10 +92,9 @@ public class PokemonListFragment extends Fragment {
         StringRequest req = new StringRequest(Request.Method.GET, url,
                 response -> {
                     adapter.addPokemon(new Pokemon(response));
-                    Log.d("tag", "yeeete");
                 },
                 error -> {
-                    Log.d("taag", String.valueOf(error));
+                    Log.d("Pokemon Add Error", String.valueOf(error));
                 });
         queue.add(req);
     }
