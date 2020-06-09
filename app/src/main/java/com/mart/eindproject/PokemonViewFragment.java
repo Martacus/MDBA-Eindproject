@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mart.eindproject.listeners.OnClickSendImageListener;
 import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
 import com.mart.eindproject.util.PokemonUtil;
@@ -65,6 +67,7 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         final TextView textName = rootView.findViewById(R.id.pokemon_name);
         final TextView textType1 = rootView.findViewById(R.id.textType1);
         final TextView textType2 = rootView.findViewById(R.id.textType2);
+        final Button sendImmageButton = rootView.findViewById(R.id.send_image_button);
 
         //Data
         int id =  pokemon.getId();
@@ -82,6 +85,9 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         }
 
         new DownloadImageTask((ImageView) rootView.findViewById(R.id.imageView)).execute(pokemon.getPicture());
+
+        sendImmageButton.setOnClickListener(new OnClickSendImageListener(pokemon));
+
         swipeRefreshLayout.setRefreshing(false);
     }
 

@@ -1,9 +1,15 @@
 package com.mart.eindproject.util;
 
+import android.content.Context;
+import android.content.ContextWrapper;
+import android.view.View;
+
 import com.mart.eindproject.R;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import androidx.fragment.app.FragmentActivity;
 
 public class PokemonUtil {
 
@@ -40,4 +46,14 @@ public class PokemonUtil {
         }
     }
 
+    public static FragmentActivity getActivity(View v) {
+        Context context = v.getContext();
+        while (context instanceof ContextWrapper) {
+            if (context instanceof FragmentActivity) {
+                return (FragmentActivity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
+    }
 }

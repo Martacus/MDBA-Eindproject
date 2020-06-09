@@ -1,6 +1,4 @@
 package com.mart.eindproject.util;
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mart.eindproject.PokemonListFragment;
 import com.mart.eindproject.R;
+import com.mart.eindproject.listeners.OnClickPokemonListener;
 import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
 
