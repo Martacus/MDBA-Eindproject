@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mart.eindproject.listeners.OnClickChangeNameListener;
 import com.mart.eindproject.listeners.OnClickSendImageListener;
 import com.mart.eindproject.models.Pokemon;
 import com.mart.eindproject.tasks.DownloadImageTask;
@@ -20,12 +21,14 @@ import com.mart.eindproject.util.PokemonUtil;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private final int pokemonID;
+    private Pokemon pokemon;
     private SwipeRefreshLayout swipeRefreshLayout;
     private View rootView = null;
 
@@ -47,8 +50,6 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         //Requesting data
         makeRequest();
 
-
-
         return rootView;
     }
 
@@ -62,12 +63,15 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         makeRequest();
     }
 
+
+
     public void populateData(Pokemon pokemon){
         //Gather the data objects
         final TextView textName = rootView.findViewById(R.id.pokemon_name);
         final TextView textType1 = rootView.findViewById(R.id.textType1);
         final TextView textType2 = rootView.findViewById(R.id.textType2);
         final Button sendImmageButton = rootView.findViewById(R.id.send_image_button);
+        final Button changeNameButton = rootView.findViewById(R.id.edit_name_button);
 
         //Data
         int id =  pokemon.getId();
@@ -87,20 +91,27 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
         new DownloadImageTask((ImageView) rootView.findViewById(R.id.imageView)).execute(pokemon.getPicture());
 
         sendImmageButton.setOnClickListener(new OnClickSendImageListener(pokemon));
+        changeNameButton.setOnClickListener(new OnClickChangeNameListener(pokemon, this));
 
         swipeRefreshLayout.setRefreshing(false);
     }
 
     public void makeRequest(){
-        RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon/" + pokemonID,
-                response -> {
-                    Pokemon pokemon = new Pokemon(response);
-                    populateData(pokemon);
-                },
-                error -> swipeRefreshLayout.setRefreshing(false)
-        );
-        queue.add(stringRequest);
+        if(pokemon == null){
+            RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon/" + pokemonID,
+                    response -> {
+                        Pokemon pokemon = new Pokemon(response);
+                        this.pokemon = pokemon;
+                        populateData(pokemon);
+                    },
+                    error -> swipeRefreshLayout.setRefreshing(false)
+            );
+            queue.add(stringRequest);
+        }
+        else{
+            populateData(pokemon);
+        }
     }
 
     public String getCapitalWorld(String s){
