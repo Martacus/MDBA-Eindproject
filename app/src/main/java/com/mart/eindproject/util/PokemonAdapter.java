@@ -72,4 +72,13 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 }
