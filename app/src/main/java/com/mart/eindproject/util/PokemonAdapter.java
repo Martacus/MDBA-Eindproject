@@ -41,7 +41,7 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonAdapter.ViewHold
         holder.id.setText(String.valueOf(pokemons.get(position).getId()));
         holder.name.setText(pokemons.get(position).getName());
         holder.itemView.setOnClickListener(new OnClickPokemonListener(pokemons.get(position)));
-        new DownloadImageTask((ImageView) holder.img).execute(pokemons.get(position).getPicture());
+        new DownloadImageTask(holder.img).execute(pokemons.get(position).getPicture());
     }
 
     @Override

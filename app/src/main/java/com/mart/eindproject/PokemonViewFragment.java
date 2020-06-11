@@ -88,7 +88,7 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
             textType2.setBackgroundColor(PokemonUtil.getTypeColor(pokemon.getType2()));
         }
 
-        new DownloadImageTask((ImageView) rootView.findViewById(R.id.imageView)).execute(pokemon.getPicture());
+        new DownloadImageTask(rootView.findViewById(R.id.imageView)).execute(pokemon.getPicture());
 
         sendImmageButton.setOnClickListener(new OnClickSendImageListener(pokemon));
         changeNameButton.setOnClickListener(new OnClickChangeNameListener(pokemon, this));
@@ -107,6 +107,7 @@ public class PokemonViewFragment extends Fragment implements SwipeRefreshLayout.
                     },
                     error -> swipeRefreshLayout.setRefreshing(false)
             );
+            stringRequest.setShouldCache(false);
             queue.add(stringRequest);
         }
         else{

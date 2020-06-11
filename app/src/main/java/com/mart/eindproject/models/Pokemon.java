@@ -1,16 +1,8 @@
 package com.mart.eindproject.models;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Log;
-
-import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.InputStream;
 
 public class Pokemon {
 
@@ -19,8 +11,6 @@ public class Pokemon {
     private String type1;
     private String type2;
     private int id;
-
-    private static String IMG_URL= "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
 
     public Pokemon(String response){
         JSONObject object;
@@ -71,15 +61,4 @@ public class Pokemon {
         return type2;
     }
 
-    private Bitmap getImage(String id) {
-        Bitmap mIcon11 = null;
-        try {
-            InputStream in = new java.net.URL(IMG_URL+String.valueOf(this.id)+".png").openStream();
-            mIcon11 = BitmapFactory.decodeStream(in);
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-        return mIcon11;
-    }
 }

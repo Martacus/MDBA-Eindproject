@@ -1,17 +1,9 @@
 package com.mart.eindproject;
 
-import android.app.DownloadManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,8 +18,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class PokemonListFragment extends Fragment {
 
@@ -58,7 +54,7 @@ public class PokemonListFragment extends Fragment {
         adapter = new PokemonAdapter(this.pokemons);
         recyclerView.setAdapter(adapter);
 
-        if(pokemons.size() == 0){
+        if (pokemons.size() == 0) {
             getPokemons();
         }
 
@@ -72,38 +68,28 @@ public class PokemonListFragment extends Fragment {
                     try {
                         JSONObject obj = new JSONObject(response);
                         JSONArray array = obj.getJSONArray("results");
-                        for(int i=0; i<array.length(); i++) {
+                        for (int i = 0; i < array.length(); i++) {
                             JSONObject x = array.getJSONObject(i);
                             String url = x.getString("url");
                             addPokemon(url);
-                            Log.d("tag", url);
                         }
-                    } catch(JSONException err) {
+                    } catch (JSONException err) {
 
                     }
                 },
-                error -> DoSomething()
+                Throwable::printStackTrace
         );
+        stringRequest.setShouldCache(false);
         queue.add(stringRequest);
     }
 
     private void addPokemon(String url) {
         RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
         StringRequest req = new StringRequest(Request.Method.GET, url,
-                response -> {
-                    adapter.addPokemon(new Pokemon(response));
-                },
-                error -> {
-                    Log.d("Pokemon Add Error", String.valueOf(error));
-                });
+                response -> adapter.addPokemon(new Pokemon(response)),
+                Throwable::printStackTrace);
+        req.setShouldCache(false);
         queue.add(req);
     }
-
-    private void loadMore(int offset){
-
-    }
-
-    public void DoSomething() {
-
-    }
 }
+
