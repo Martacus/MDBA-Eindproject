@@ -1,5 +1,6 @@
 package com.mart.eindproject;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mart.eindproject.models.Pokemon;
-import com.mart.eindproject.util.EndlessRecyclerViewScrollListener;
 import com.mart.eindproject.util.PokemonAdapter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -31,7 +27,7 @@ public class PokemonListFragment extends Fragment {
     private RecyclerView recyclerView;
     private View rootView = null;
     private PokemonAdapter adapter = null;
-    private EndlessRecyclerViewScrollListener scrollListener;
+    private RequestQueue queue;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,41 +51,30 @@ public class PokemonListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         if (pokemons.size() == 0) {
-            getPokemons();
+            getPokemons(rootView);
         }
 
         return rootView;
     }
 
-    public void getPokemons() {
-        RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon?limit=151",
-                response -> {
-                    try {
-                        JSONObject obj = new JSONObject(response);
-                        JSONArray array = obj.getJSONArray("results");
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject x = array.getJSONObject(i);
-                            String url = x.getString("url");
-                            addPokemon(url);
-                        }
-                    } catch (JSONException err) {
-
-                    }
-                },
-                Throwable::printStackTrace
-        );
-        stringRequest.setShouldCache(false);
-        queue.add(stringRequest);
+    public void getPokemons(View rootView) {
+        for(int i = 1; i < 152; i++){
+            StringRequest req = new StringRequest(Request.Method.GET, "https://pokeapi.co/api/v2/pokemon/" + i,
+                    response -> adapter.addPokemon(new Pokemon(response)),
+                    Throwable::printStackTrace);
+            req.setShouldCache(false);
+            getRequestQueue(rootView.getContext()).add(req);
+        }
     }
 
-    private void addPokemon(String url) {
-        RequestQueue queue = Volley.newRequestQueue(rootView.getContext());
-        StringRequest req = new StringRequest(Request.Method.GET, url,
-                response -> adapter.addPokemon(new Pokemon(response)),
-                Throwable::printStackTrace);
-        req.setShouldCache(false);
-        queue.add(req);
+    public RequestQueue getRequestQueue(Context context) {
+        if (queue == null) {
+            queue = Volley.newRequestQueue(context);
+        }
+
+        return queue;
     }
+
+
 }
 
