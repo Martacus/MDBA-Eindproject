@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
     private PokemonListFragment listFragment;
+    private ImportImage importImageFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +39,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (savedInstanceState == null) {
             if(listFragment == null){
                 listFragment = new PokemonListFragment();
-
+            }
+            if(importImageFragment == null) {
+                importImageFragment = new ImportImage();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                    listFragment).addToBackStack(null).commit();
@@ -70,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_favorite:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        this.importImageFragment).addToBackStack(null).commit();
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
