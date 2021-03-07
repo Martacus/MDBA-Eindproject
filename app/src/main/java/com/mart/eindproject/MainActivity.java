@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import com.mart.eindproject.settings.SettingsActivity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if(importImageFragment == null) {
                 importImageFragment = new ImportImage();
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,
                    listFragment).addToBackStack(null).commit();
             navigationView.setCheckedItem(R.id.nav_pokemon);
         }
@@ -53,13 +52,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onBackPressed() {
         if(drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+            finish();
+        }
+        else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
         switch(menuItem.getItemId()){
             case R.id.nav_pokemon:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

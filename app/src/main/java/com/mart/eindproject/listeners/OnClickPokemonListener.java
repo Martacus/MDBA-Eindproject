@@ -24,7 +24,7 @@ public class OnClickPokemonListener implements  View.OnClickListener {
     public void onClick(View v) {
         FragmentActivity activity = getActivity(v);
         activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new PokemonViewFragment(pokemon.getId())).commit();
+                new PokemonViewFragment(pokemon.getId())).addToBackStack(null).commit();
     }
 
     private FragmentActivity getActivity(View v) {
