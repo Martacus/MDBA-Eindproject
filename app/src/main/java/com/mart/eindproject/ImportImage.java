@@ -41,19 +41,6 @@ public class ImportImage extends Fragment {
         // Required empty public constructor
     }
 
-    private ActivityResultLauncher<String> requestPermissionLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-        if (isGranted) {
-            // Permission is granted. Continue the action or workflow in your
-            // app.
-        } else {
-            // Explain to the user that the feature is unavailable because the
-            // features requires a permission that the user has denied. At the
-            // same time, respect the user's decision. Don't link to system
-            // settings in an effort to convince the user to change their
-            // decision.
-        }
-    });
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_import_image, container, false);
@@ -99,10 +86,8 @@ public class ImportImage extends Fragment {
             gallery.setType("image/*");
             gallery.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(Intent.createChooser(gallery, "Select picture"), PICK_IMAGE);
-        } else if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
         } else {
-            requestPermissionLauncher.launch(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 20);
         }
     }
 

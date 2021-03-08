@@ -14,4 +14,6 @@
     <string name="send_immage_button">Share Image</string>
     <string name="edit_name">Edit Name</string>
     <string name="permission_camera">PERMISSION_CAMERA</string>
+    <string name="from_camera">From Camera</string>
+    <string name="from_gallery">From Gallery</string>
 </resources>
