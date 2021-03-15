@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         if(accounts.containsKey(username)){
             if(password.contentEquals(password)){
                 Intent intent = new Intent(this, MainActivity.class);
-                intent.setFlags(intent.getFlags() | Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
                 finish();
             }

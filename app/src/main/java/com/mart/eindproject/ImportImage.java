@@ -1,5 +1,6 @@
 package com.mart.eindproject;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
