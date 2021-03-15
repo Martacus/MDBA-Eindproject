@@ -1,6 +1,5 @@
 package com.mart.eindproject;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,21 +18,18 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.google.android.material.snackbar.Snackbar;
 
 
 public class ImportImage extends Fragment {
 
     private ImageView imageView;
     private Button button;
-    private Button cameraButton;
     private View rootView = null;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri;
@@ -54,12 +50,6 @@ public class ImportImage extends Fragment {
     public void createElements() {
         this.imageView = rootView.findViewById(R.id.imageView5);
         this.button = rootView.findViewById(R.id.button2);
-        this.cameraButton = rootView.findViewById(R.id.button3);
-
-        cameraButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { openCamera();}
-        });
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,16 +57,6 @@ public class ImportImage extends Fragment {
                 openGallery();
             }
         });
-    }
-
-    private void openCamera() {
-        if(ActivityCompat.checkSelfPermission(getContext() , Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(intent, 5);
-        }
-        else {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA}, 20);
-        }
     }
 
     private void openGallery() {
@@ -99,10 +79,6 @@ public class ImportImage extends Fragment {
         if(resultCode == -1 ) {
             imageUri = data.getData();
             imageView.setImageURI(imageUri);
-        }
-        if(requestCode == 5) {
-            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-            imageView.setImageBitmap(bitmap);
         }
     }
 }
